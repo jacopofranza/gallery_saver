@@ -3,10 +3,14 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:gallery_saver/files.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+
+bool isLocalFilePath(String path) {
+  Uri uri = Uri.parse(path);
+  return !uri.scheme.contains('http');
+}
 
 class GallerySaver {
   static const String channelName = 'gallery_saver';
@@ -27,7 +31,6 @@ class GallerySaver {
     String? fileName,
   }) async {
     assert(path.isNotEmpty, pleaseProvidePath);
-    assert(isVideo(path), fileIsNotVideo);
 
     File? tempFile;
     if (!isLocalFilePath(path)) {
@@ -54,7 +57,6 @@ class GallerySaver {
     String? fileName,
   }) async {
     assert(path.isNotEmpty, pleaseProvidePath);
-    assert(isImage(path), fileIsNotImage);
 
     File? tempFile;
     if (!isLocalFilePath(path)) {
