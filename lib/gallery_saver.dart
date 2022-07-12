@@ -94,7 +94,7 @@ class GallerySaver {
   }
 
   static String _shortenFileName(String url) {
-    String fileName = basename(url);
+    String fileName = basename(url).split('?')[0];
     final len = fileName.length;
 
     if (len > 255) {
